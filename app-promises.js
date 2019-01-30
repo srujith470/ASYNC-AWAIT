@@ -57,7 +57,7 @@ const getStatus =(userID) => {
     return getUser(userID).then((tempuser)=> {
     user =tempuser    
     return getGrades(user.schoolID);
-    }).then((grades) =>{
+    }).then((grades) =>{    
         let average = 0
         if(grades.length>0){
             average = grades.map((grade) =>grade.grade).reduce((a,b) => a+b)/grades.length
@@ -68,20 +68,35 @@ const getStatus =(userID) => {
 }
 
 const getStatusAlt = async (userId) => {
-    return 'Mike';
+    const user = await getUser(userId)
+    const grades = await getGrades(user.schoolID)
+    let average = 0
+    if(grades.length>0){
+        average = grades.map((grade) =>grade.grade).reduce((a,b) => a+b)/grades.length
+    }
+    console.log(average);
+    return `${user.name} has a ${average}% in class`
+    console.log(user, grades)
 }
-console.log(getStatusAlt())
+//console.log(getStatusAlt())
+
+getStatusAlt(2).then((name) =>{
+    console.log(name)
+}).catch((e) => {
+    console.log(e)
+})
 
 // getUser(1).then((user) =>{
 //     console.log(user)
 // }).catch((e) => {
 // console.log(e)
 // })
-getStatus(2).then((user) =>{
-    console.log(user)
-}).catch((e) => {
-console.log(e)
-})
+
+// getStatus(2).then((user) =>{
+//     console.log(user)
+// }).catch((e) => {
+// console.log(e)
+// })
 
 // getGrades(104).then((user) =>{
 //     console.log(user)
